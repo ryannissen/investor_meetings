@@ -1,6 +1,11 @@
 
 
-function AgendaList({list}) {
+function AgendaList({list, updateCurrentItem}) {
+
+    function selectItem(evt) {
+        const id = (evt.target.closest('ul').className).slice(6);
+        updateCurrentItem(id);
+    };
 
     return (
         <div>
@@ -8,18 +13,17 @@ function AgendaList({list}) {
             <h1>Agenda List</h1>
             <p>------------------</p>
         {
-            list.listItems.map((item) => 
-            <div  key={item.id}>
-                <p>Title: {item.title}</p>
-                <p>Time Est: {item.timeestimate} min(s)</p>
-                <p>Description: {item.description}</p>
-                <p>------------------</p>
-            </div>
+            list.map((item) => 
+            <ul key={item.id} className={`itemID${item.id}`} onClick={selectItem}>
+                <li>Title: {item.title}</li>
+                <li>Time Est: {item.timeestimate} min(s)</li>
+                <li>Description: {item.description}</li>
+            </ul>
             )
         }
         </div>
     )
 
-}
+};
 
 export default AgendaList;

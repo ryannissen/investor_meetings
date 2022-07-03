@@ -1,4 +1,3 @@
-"use strict";
 
 class SurfboardAPI {
 
@@ -9,15 +8,22 @@ class SurfboardAPI {
         return agendaList;
     }
 
-    static async addAgendaItem() {
+    static async addAgendaItem(item) {
+        const response = await fetch('data.json', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(item)
+        })
+        return response.json;
+    }
+
+    static async removeAgendaItem(id) {
 
     }
 
-    static async removeAgendaItem() {
-
-    }
-
-    static async updateAgendaItem() {
+    static async updateAgendaItem(id) {
 
     }
 

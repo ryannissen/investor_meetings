@@ -14,35 +14,38 @@ function App() {
   const [currentItem, setCurrentItem] = useState([]);
 
   useEffect(function updateAgendaListOnLoad() {
-    async function updateList() {
-
+    async function agendaListOnLoad() {
       try {
         const listItems = await SurfboardAPI.getAgendaList();
-        setAgendaList(currentList => ({
-          ...currentList,
-          listItems
-      }))
+        setAgendaList(listItems);
         setCurrentItem(listItems[0])
       } catch {
         console.log("Failed API call to get list items");
       }
     }
-    updateList();
-  }, [])
+    agendaListOnLoad();
+  }, []);
 
   // useEffect(function getCurrentItemOnLoad() {
-  //   async function updateCurrentItem() {
+  //   async function currentItemOnLoad() {
   //     try {
-  //       setCurrentItem
+  //       setCurrentItem(agendaList[0])
   //     } catch {
-  //       console.log("something");
+  //       console.log("Cannot set current item");
   //     }
   //   }
-  // })
+  //   if (agendaList.length > 0) {
+  //     currentItemOnLoad()
+  //   }
+  // }, [agendaList]);
+
+  function updateCurrentItem(id) {
+    setCurrentItem(agendaList[id - 1])
+  }
 
   if (agendaList.length < 1){
     return <h1>Loading Surfboard Meeting App</h1>
-  }
+  };
 
   return (
     <div className="App">
@@ -51,10 +54,10 @@ function App() {
           <h1>Surfboard Investor Meeting</h1>
         </div>
         <div className="AppAgendaList">
-          <AgendaList list={agendaList}/>
+          <AgendaList list={agendaList} updateCurrentItem={updateCurrentItem}/>
         </div>
         <div className="AppCurrentItem">
-          <CurrentAgendaItem  item={currentItem}/>
+          <CurrentAgendaItem  item={currentItem} />
         </div>
 
       </div>
